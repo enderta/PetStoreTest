@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.*;
 
-public class CRUDSteps {
+public class UserEndPointsSteps {
     private Response response;
     private Map<String, Object> userPayload;
     private String userID;
