@@ -1,29 +1,30 @@
-# Maven
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
 trigger:
-- main
+  - main
 
 pool:
   name: loupeAgent
   vmImage: ubuntu-latest
-  
 
 steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.11'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean test'
-    options: '-Dcucumber.filter.tags="@user"'
-- task: PublishTestResults@2
-  inputs:
-   testResultsFiles: '**/target/surefire-reports/*.xml'
-   testRunTitle: 'Cucumber Test Results'
+  # Step 1: Install JDK 11 (useful if JDK isn't pre-installed on the agent)
+  - task: UseJavaVersion@1
+    inputs:
+      versionSpec: '11'
+      architecture: 'x64'
+
+  # Step 2: Run Maven to build and test, filtering for specific Cucumber tags
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      mavenOptions: '-Xmx3072m'
+      javaHomeOption: 'Path'  # Use the Java path set by UseJavaVersion
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      goals: 'clean test'
+      options: '-Dcucumber.filter.tags="@user"'
+
+  # Step 3: Publish Test Results
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFiles: '**/target/surefire-reports/*.xml'
+      testRunTitle: 'Cucumber Test Results'
