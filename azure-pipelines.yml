@@ -19,4 +19,9 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    goals: 'clean test'
+    options: '-Dcucumber.filter.tags="@user"'
+- task: PublishTestResults@2
+  inputs:
+   testResultsFiles: '**/target/surefire-reports/*.xml'
+   testRunTitle: 'Cucumber Test Results'
