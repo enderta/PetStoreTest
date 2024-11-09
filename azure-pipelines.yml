@@ -7,7 +7,9 @@ trigger:
 - main
 
 pool:
+  name: loupeAgent
   vmImage: ubuntu-latest
+  
 
 steps:
 - task: Maven@3
