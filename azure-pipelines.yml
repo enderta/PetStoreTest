@@ -23,6 +23,6 @@ steps:
     jdkDestinationDirectory: "/builds/binaries/externals"
     cleanDestinationDirectory: true
     goals: 'test'
-    options: '-Dcucumber.filter.tags="@user"'
+    options: '-Dcucumber.filter.tags="@wip"'
     testResultsFiles: '**/target/surefire-reports/*.xml'
     testRunTitle: 'Cucumber Test Results'
