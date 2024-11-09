@@ -17,10 +17,11 @@ steps:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
     versionSpec: "11"
     jdkArchitectureOption: x64
     jdkSourceOption: LocalDirectory
     jdkFile: "/builds/openjdk-11.0.2_linux-x64_bin.tar.gz"
     jdkDestinationDirectory: "/builds/binaries/externals"
     cleanDestinationDirectory: true
+    goals: 'clean test'
+    options: '-Dcucumber.filter.tags="@user"'
