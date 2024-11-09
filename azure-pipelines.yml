@@ -1,31 +1,30 @@
 trigger:
-  - main
+- main
 
 pool:
   name: loupeAgent
   vmImage: ubuntu-latest
 
 steps:
-  # Step 1: Install JDK 11 using JavaToolInstaller from the Microsoft-hosted tool cache
-  - task: JavaToolInstaller@0
-    inputs:
-      jdkVersionOption: '1.11'
-      jdkArchitectureOption: 'x64'
-      jdkSourceOption: 'PreInstalled'  # Use pre-installed JDK from Microsoft-hosted agent cache
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '1.8'  # This installs Java 8
+    jdkArchitecture: 'x64'
+    jdkSourceOption: 'PreInstalled'  # Use preinstalled JDK or provide other sources if required
 
-  # Step 2: Run Maven to build and test, filtering for specific Cucumber tags
-  - task: Maven@3
-    inputs:
-      mavenPomFile: 'pom.xml'
-      mavenOptions: '-Xmx3072m'
-      javaHomeOption: 'Path'  # Use the Java path set by JavaToolInstaller
-      publishJUnitResults: true
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      goals: 'clean test'
-      options: '-Dcucumber.filter.tags="@user"'
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'  # Specify Java 8 here
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'clean test'
+    options: '-Dcucumber.filter.tags="@user"'
 
-  # Step 3: Publish Test Results
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFiles: '**/target/surefire-reports/*.xml'
-      testRunTitle: 'Cucumber Test Results'
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: '**/target/surefire-reports/*.xml'
+    testRunTitle: 'Cucumber Test Results'
