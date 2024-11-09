@@ -8,7 +8,7 @@ pool:
 steps:
 - task: JavaToolInstaller@0
   inputs:
-    versionSpec: '1.8'  # This installs Java 8
+    versionSpec: '21'  # This installs Java 8
     jdkArchitecture: 'x64'
     jdkSourceOption: 'PreInstalled'  # Use preinstalled JDK or provide other sources if required
 
