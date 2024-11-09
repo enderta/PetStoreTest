@@ -6,11 +6,7 @@
 
 trigger:
 - main
-- task: JavaToolInstaller@1
-  inputs:
-    versionSpec: '8'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
+
 pool:
   vmImage: ubuntu-latest
   name: loupeAgent
@@ -26,3 +22,8 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+- task: JavaToolInstaller@1
+  inputs:
+    versionSpec: '8'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
