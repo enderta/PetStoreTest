@@ -8,16 +8,16 @@ pool:
 steps:
 - task: JavaToolInstaller@0
   inputs:
-    versionSpec: '11'  # This installs Java 8
+    versionSpec: '11'  # This installs Java 11
     jdkArchitecture: 'x64'
-    jdkSourceOption: 'PreInstalled'  # Use preinstalled JDK or provide other sources if required
+    jdkSourceOption: 'PreInstalled'
 
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'  # Specify Java 8 here
+    jdkVersionOption: '11'  # Specify Java 11 here
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
