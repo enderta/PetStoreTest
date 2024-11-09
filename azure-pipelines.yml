@@ -6,18 +6,18 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  # Step 1: Install JDK 11 (useful if JDK isn't pre-installed on the agent)
-  - task: UseJavaVersion@1
+  # Step 1: Install JDK 11 using JavaToolInstaller
+  - task: JavaToolInstaller@0
     inputs:
       versionSpec: '11'
-      architecture: 'x64'
+      jdkArchitectureOption: 'x64'
 
   # Step 2: Run Maven to build and test, filtering for specific Cucumber tags
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
       mavenOptions: '-Xmx3072m'
-      javaHomeOption: 'Path'  # Use the Java path set by UseJavaVersion
+      javaHomeOption: 'Path'  # Use the Java path set by JavaToolInstaller
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       goals: 'clean test'
