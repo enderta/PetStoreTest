@@ -1,18 +1,18 @@
 trigger:
-- main
+- main  # This defines the branch that triggers the pipeline (main branch)
 
 pool:
   name: loupeAgent
   vmImage: ubuntu-latest
 
 steps:
-- task: JavaToolInstaller@0
+- task: JavaToolInstaller@1  # Install Java 11
   inputs:
-    versionSpec: '11'  # This installs Java 11
-    jdkArchitecture: 'x64'
+    versionSpec: '11'
+    jdkArchitectureOption: 'x64'
     jdkSourceOption: 'PreInstalled'
 
-- task: Maven@3
+- task: Maven@3  # Run Maven build
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -24,7 +24,7 @@ steps:
     goals: 'clean test'
     options: '-Dcucumber.filter.tags="@user"'
 
-- task: PublishTestResults@2
+- task: PublishTestResults@2  # Publish test results
   inputs:
     testResultsFiles: '**/target/surefire-reports/*.xml'
     testRunTitle: 'Cucumber Test Results'
