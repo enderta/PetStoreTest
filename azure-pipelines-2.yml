@@ -22,7 +22,7 @@ steps:
     jdkFile: "/builds/openjdk-11.0.2_linux-x64_bin.tar.gz"
     jdkDestinationDirectory: "/builds/binaries/externals"
     cleanDestinationDirectory: true
-    goals: 'mvn test'
+    goals: 'test'
     options: '-Dcucumber.filter.tags="@user"'
     testResultsFiles: '**/target/surefire-reports/*.xml'
     testRunTitle: 'Cucumber Test Results'
