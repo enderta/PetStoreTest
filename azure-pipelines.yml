@@ -6,11 +6,12 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-  # Step 1: Install JDK 11 using JavaToolInstaller
+  # Step 1: Install JDK 11 using JavaToolInstaller from the Microsoft-hosted tool cache
   - task: JavaToolInstaller@0
     inputs:
-      versionSpec: '11'
+      jdkVersionOption: '1.11'
       jdkArchitectureOption: 'x64'
+      jdkSourceOption: 'PreInstalled'  # Use pre-installed JDK from Microsoft-hosted agent cache
 
   # Step 2: Run Maven to build and test, filtering for specific Cucumber tags
   - task: Maven@3
