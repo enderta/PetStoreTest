@@ -1,30 +1,28 @@
+# Maven
+
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
 trigger:
-- main  # This defines the branch that triggers the pipeline (main branch)
+- main
 
 pool:
-  name: loupeAgent
   vmImage: ubuntu-latest
+  name: loupeAgent
 
 steps:
-- task: JavaToolInstaller@1  # Install Java 11
-  inputs:
-    versionSpec: '11'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
-
-- task: Maven@3  # Run Maven build
+- task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '11'  # Specify Java 11 here
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean test'
+    versionSpec: "11"
+    jdkArchitectureOption: x64
+    jdkSourceOption: LocalDirectory
+    jdkFile: "/builds/openjdk-11.0.2_linux-x64_bin.tar.gz"
+    jdkDestinationDirectory: "/builds/binaries/externals"
+    cleanDestinationDirectory: true
+    goals: 'test'
     options: '-Dcucumber.filter.tags="@user"'
-
-- task: PublishTestResults@2  # Publish test results
-  inputs:
     testResultsFiles: '**/target/surefire-reports/*.xml'
     testRunTitle: 'Cucumber Test Results'
